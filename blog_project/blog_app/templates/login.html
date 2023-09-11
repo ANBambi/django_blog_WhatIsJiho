@@ -6,12 +6,24 @@
     <title>login</title>
 </head>
 <body>
+
+    <div class="login-form">
+        <h2>로그인</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="" id="" placeholder="username">
+            <input type="password" name="" id="" placeholder='password'>
+            <button type="submit">로그인</button>
+        </form>
+    </div>
+
     <a href="{% url 'board_admin' %}">게시판 관리자 페이지로 이동</a>
     <br>
     <a href="{% url 'board_client' %}">게시판 클라이언트 페이지로 이동</a>
     <br>
-    <a href="{% url 'board' %}">게시판 페이지로 이동</a>
+    <a href="{% url 'post' %}">게시판 페이지로 이동</a>
     <br>
     <a href="{% url 'write' %}">글 쓰기 페이지로 이동</a>
+
 </body>
 </html>

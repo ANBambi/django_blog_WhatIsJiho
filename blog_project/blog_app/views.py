@@ -13,8 +13,8 @@ def board_client(request):
     return render(request, "board_client.html")
 
 
-def board(request):
-    return render(request, "board.html")
+def post(request):
+    return render(request, "post.html")
 
 
 def write(request):
