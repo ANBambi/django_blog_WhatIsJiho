@@ -8,6 +8,6 @@ urlpatterns = [
     # path('logout/', views.logout, name='logout'),
     path("board_admin", views.board_admin, name="board_admin"),
     path("board_client", views.board_client, name="board_client"),
-    path("board", views.board, name="board"),
+    path("post", views.post, name="post"),
     path("write", views.write, name="write"),
 ]
