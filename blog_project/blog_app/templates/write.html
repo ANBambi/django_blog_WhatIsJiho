@@ -4,49 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/write.css' %}">
     <title>write</title>
 </head>
 <body>
+
+
+  <div class="container">
     <div class="nav-bar">
-        <div class="nav-container">
-          <div>
+      <div class="nav-container">
+        <div>
+          <a href="#">
+            <img src="{% static 'img/black_logo.svg' %}" alt="" />
+          </a>
+        </div>
+        <div class="nav-buttons">
+          <div class="nav-topics">
             <a href="#">
-              <img src="{% static 'img/black_logo.svg' %}" alt="" />
-            </a>
+              <button>일상</button></a>
+            <a href="#">
+              <button>요리</button></a>
+            <a href="#">
+              <button>여행</button></a>
+            <a href="#">
+              <button>영화</button></a>
+            <a href="#">
+              <button>IT</button></a>
           </div>
-          <div class="nav-buttons">
-            <div class="nav-topics">
-              <a href="#">
-                <button>일상</button></a>
-              <a href="#">
-                <button>요리</button></a>
-              <a href="#">
-                <button>여행</button></a>
-              <a href="#">
-                <button>영화</button></a>
-              <a href="#">
-                <button>IT</button></a>
-            </div>
-            <div class="row-box">
-              {% comment %} {% if user.is_authenticated %}
-              <a href="#" class="logout-button">Logout</a>
-              <a
-                href="#"
-                class="primary-button"
-                style="color: #1e1e1e">
-                Just Write!</a>
-              {% else %}
-              <a
-                href="#"
-                class="primary-button"
-                style="color: #1e1e1e">Login</a>
-              {% endif %} {% endcomment %}
-            </div>
+          <div class="row-box">
+            {% comment %} {% if user.is_authenticated %}
+            <a href="#" class="logout-button">Logout</a>
+            <a
+              href="#"
+              class="primary-button"
+              style="color: #1e1e1e">
+              Just Write!</a>
+            {% else %}
+            <a
+              href="#"
+              class="primary-button"
+              style="color: #1e1e1e">Login</a>
+            {% endif %} {% endcomment %}
           </div>
         </div>
+      </div>
     </div>
-    
-  
+    <div class="content">
+      <div class="text">
+        <div class="write-box">
+          <input type="text" id="title" name="title" class="title" placeholder="제목" value="{{ post.title }}"
+            />
+        </div>
+        <form action="" method="post">
+          <textarea name="textarea" id="default" cols="30" rows="10"></textarea>
+        </form>
+      </div>
+      <div class="side-bar">
+
+      </div>
+    </div>
+
+  </div>
+
+    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+    <script src="{% static 'js/write_scripts.js' %}"></script>
 </body>
 </html>
