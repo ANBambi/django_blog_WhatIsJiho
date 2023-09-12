@@ -11,3 +11,4 @@ urlpatterns = [
     path("post", views.post, name="post"),
     path("write", views.write, name="write"),
 ]
+
