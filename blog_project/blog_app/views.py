@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import PostForm
 
 
 def login(request):
@@ -14,7 +15,14 @@ def board_client(request):
 
 
 def post(request):
-    return render(request, "post.html")
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_Valid():
+            form.save()
+            return redirect("post_list")
+    else:
+        form = PostForm()
+    return render(request, "post.html", {"form": form})
 
 
 def write(request):
