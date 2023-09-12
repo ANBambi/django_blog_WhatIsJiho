@@ -23,7 +23,7 @@ django_env
 
 # C extensions
 *.so
-
+.html
 # Distribution / packaging
 .Python
 build/
