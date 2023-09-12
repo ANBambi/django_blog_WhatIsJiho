@@ -8,45 +8,64 @@
     <title>board-admin</title>
 </head>
 <body>
+    {% comment %} 상단 메뉴바 {% endcomment %}
     <div class="nav-bar">
         <div class="nav-container">
-          <div>
+        <div>
             <a href="#">
-              <img src="{% static 'img/white_logo.svg' %}" alt="" />
+            <img src="{% static 'img/white_logo.svg' %}" alt="" />
             </a>
-          </div>
-          <div class="nav-buttons">
+        </div>
+        <div class="nav-buttons">
             <div class="nav-topics">
-              <a href="#">
+            <a href="#">
                 <button>일상</button></a>
-              <a href="#">
+            <a href="#">
                 <button>요리</button></a>
-              <a href="#">
+            <a href="#">
                 <button>여행</button></a>
-              <a href="#">
+            <a href="#">
                 <button>영화</button></a>
-              <a href="#">
+            <a href="#">
                 <button>IT</button></a>
             </div>
             <div class="row-box">
-              {% comment %} {% if user.is_authenticated %}
-              <a href="#" class="logout-button">Logout</a>
-              <a
+            {% comment %} {% if user.is_authenticated %}
+            <a href="#" class="logout-button">Logout</a>
+            <a
                 href="#"
                 class="primary-button"
                 style="color: #1e1e1e">
                 Just Write!</a>
-              {% else %}
-              <a
+            {% else %}
+            <a
                 href="#"
                 class="primary-button"
                 style="color: #1e1e1e">Login</a>
-              {% endif %} {% endcomment %}
+            {% endif %} {% endcomment %}
             </div>
-          </div>
+        </div>
+        </div>
+    </div>
+    {% comment %} 상단: 메인 포스트 표시될 부분 {% endcomment %}
+    <div class="top-container">
+        <div class="container">
+            <div class="post-info-box">
+                <h3 class="main-title">Lorem ipsum dolor</h3>
+                <p class="main-info">Lorem ipsum dolor sit amet consectetur. Non pretium arcu praesent cursus aliquam pellentesque. Euismod consectetur fames vitae nunc gravida morbi felis porttitor integer. Ridiculus id purus feugiat et mi justo scelerisque euismod euismod. Turpis dictumst luctus nisi placerat purus dolor luctus vitae pretium. Gravida faucibus scelerisque quis mi consequat malesuada.
+                </p>
+            </div>
+                <button class="readMore">READ MORE</button>
+            <div class= "thumnail-img">
+                <img src="{% static 'img/card.svg'%}" class="">
+            </div>
         </div>
     </div>
     
+    {% comment %} 메인: 포스트 목록 표시될 부분 {% endcomment %}
+    {% comment %} <section class= "main-container">
+        <img src="{% static 'img/card.svg'%}" class="">
+    </section> {% endcomment %}
   
 </body>
 </html>

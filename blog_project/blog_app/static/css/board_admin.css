@@ -1,4 +1,7 @@
 * {
+    /* margin: 0;
+    padding:0;
+    box-sizing: border-box; */
     font-family: 'Pretendard', sans-serif;
 }
 
@@ -88,4 +91,75 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+
+
+/* 상단박스 */
+/* .top-container {
+    background-color: #1e1e1e;
+    height: 520px;
+    color: #fff;
+    font-family: 'Pretendard', sans-serif;
+
+} */
+
+.top-container h3{
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.top-container p{
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.top-container .container{
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between;
+    align-items: center;
+    height: 415px;
+}
+
+.top-container .container .post-info-box{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: -60px;
+    gap: 8px;
+    position: absolute;
+    color: #fff;
+    z-index: 1;
+    height: auto;
+    width: 40%;
+    line-height: 2;
+}
+
+.top-container button{
+    background-color: #3a3a3a;
+    color: #f9f8f4;
+    border-radius: 2px;
+    padding: 8px 18px;
+    width: fit-content;
+    font-size: 14px
+}
+
+.top-container button:hover{
+    background-color: #474747;
+    transition: transform 0.8s;
+}
+
+.top-container .container .thumbnail-img {
+    opacity: 0.3;
+    height: -webkit-fill-available;
+}
+
+.top-container .container .thumbnail-img img{
+    object-fit: cover;
+    min-width: 600px;
+    min-height: -webkit-fill-available;
+    width: 100%; 
+    height: 100%; 
 }
