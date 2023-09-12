@@ -1,0 +1,76 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+body{
+    width: 100%;
+    height: 100%;
+    background-color: #f9f8f4;
+}
+
+.login-form{
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    margin-top: 20%;
+}
+
+h1 {
+    color: #1E1E1E;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+
+form{
+    width: 300px;
+    height: 264px;
+    border-radius: 2px;
+    border: 1px solid #CAC8C5;
+    background: #FFF;
+    display: flex;
+    flex-direction: column; 
+}
+
+input{
+    display: flex;
+    width: 200px;
+    padding: 10px;
+    gap: 10px;
+    border-bottom: 1px solid #CAC8C5;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    margin: auto;
+}
+
+button{
+    display: flex;
+    width: 200px;
+    padding: 11px 82px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 2px;
+    background: #1E1E1E;
+    color: #FFF;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: auto;
+}
+
+input::placeholder {
+    color: #CAC8C5;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+label{
+    display: none;
+}
