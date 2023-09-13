@@ -149,4 +149,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "login"
 LOGOUT_URL = "logout"
 
-LOGIN_REDIRECT_URL = "board_client"
+LOGIN_REDIRECT_URL = "board_admin"
+# 로그인 후 게시판(board_admin)로 이동
