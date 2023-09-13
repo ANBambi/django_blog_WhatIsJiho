@@ -1,12 +1,21 @@
 from django.db import models
-from django.utils import timezone
+# from django.utils import timezone
 
 
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    create_at = models.DateTimeField('date created', auto_now_add=True)
-
+    created_at = models.DateTimeField('date created', auto_now_add=True)
+    views = models.IntegerField(default=0) # visitcount 
+    
     def __str__(self):
         return self.title
+
+    def increment_visit_count(self):
+        self.visit_count += 1
+        self.save()
+    
+    @property
+    def view_count(self):
+        return self.visit_count
