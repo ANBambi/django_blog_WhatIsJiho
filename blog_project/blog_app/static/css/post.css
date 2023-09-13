@@ -90,10 +90,75 @@ button:hover {
   gap: 20px;
 }
 
+/* post box 부분 */
+body{
+  /* background-color: #f9f8f4; */
+  /* 일단 구분하기 쉽게 회색으로 해놨어여 */
+  background-color: #696969;
+}
+
+.container{
+  width: 1024px;
+  display: flex;
+  flex-direction: column;
+  /* flex-direction: row; */
+  justify-content: center;
+  margin: auto;
+  margin-top: 140px;
+  gap: 20px;
+  margin-bottom: 200px;
+  font-family: 'Pretendard', sans-serif;
+
+}
+
+.box-divider{
+  display: flex;
+}
+
+.post-zone{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.post-box{
+  border: 1px solid #dbdbdb;
+  padding: 20px;
+  width: 60%;
+  margin-right: 24px;
+
+  /* 나중에 삭제 */
+  /* height: 1024px; */
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+  align-items: center;
+}
+
+
+.small-box {
+  border: 1px solid #dbdbdb;
+  padding: 20px;
+  width: calc(30% - 24px);
+  /* 남은 공간을 차지하도록 설정하고, margin으로 인한 간격을 고려 */
+}
+
+.small-box img{
+  display: block;
+  max-width: -webkit-fill-available;
+  padding: 40px 0;
+  object-fit: cover;
+
+}
+
+
+
 
 
 /* footer 부분 */
-/* .footer{
+.footer{
   width: 100%;
   background-color: #e7e3da;
   height: 200px;
@@ -114,4 +179,4 @@ button:hover {
 
 span{
   font-weight: bold;
-} */
+}
