@@ -7,46 +7,51 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/post.css' %}">
     <title>post</title>
 </head>
+
 <body>
+    {% comment %} 상단 메뉴바 {% endcomment %}
     <div class="nav-bar">
         <div class="nav-container">
-          <div>
-            <a href="#">
-              <img src="{% static 'img/black_logo.svg' %}" alt="" />
-            </a>
-          </div>
-          <div class="nav-buttons">
-            <div class="nav-topics">
-              <a href="#">
-                <button>일상</button></a>
-              <a href="#">
-                <button>요리</button></a>
-              <a href="#">
-                <button>여행</button></a>
-              <a href="#">
-                <button>영화</button></a>
-              <a href="#">
-                <button>IT</button></a>
+            <div>
+                <a href="#">
+                    <img src="{% static 'img/black_logo.svg' %}" alt="" />
+                </a>
             </div>
-            <div class="row-box">
-              {% comment %} {% if user.is_authenticated %}
-              <a href="#" class="logout-button">Logout</a>
-              <a
-                href="#"
-                class="primary-button"
-                style="color: #1e1e1e">
-                Just Write!</a>
-              {% else %}
-              <a
-                href="#"
-                class="primary-button"
-                style="color: #1e1e1e">Login</a>
-              {% endif %} {% endcomment %}
+            <div class="nav-buttons">
+                <div class="nav-topics">
+                <a href="#">
+                    <button>일상</button></a>
+                <a href="#">
+                    <button>요리</button></a>
+                <a href="#">
+                    <button>여행</button></a>
+                <a href="#">
+                    <button>영화</button></a>
+                <a href="#">
+                    <button>IT</button></a>
+                </div>
+                <div class="row-box">
+                <!-- {% comment %} {% if user.is_authenticated %}
+                <a href="#" class="logout-button">Logout</a>
+                <a
+                    href="#"
+                    class="primary-button"
+                    style="color: #1e1e1e">
+                    Just Write!</a>
+                {% else %}
+                <a
+                    href="#"
+                    class="primary-button"
+                    style="color: #1e1e1e">Login</a>
+                {% endif %} {% endcomment %} -->
+                </div>
             </div>
-          </div>
         </div>
     </div>
-    
-  
+    <div class="footer">
+        <div class="footer-container">
+            <p>Made with</p><span>Django</span>
+        </div>
+    </div>
 </body>
 </html>

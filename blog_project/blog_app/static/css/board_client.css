@@ -1,5 +1,9 @@
 * {
     font-family: 'Pretendard', sans-serif;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
 }
 
 .nav-bar {
@@ -9,10 +13,10 @@
     height: 104px;
     position: fixed;
     top: 0;
-    background-color: #f9f8f4;
+    background-color: #1E1E1E;
     width: 100%;
     z-index: 999;
-    color: #1e1e1e;
+    color: #f9f8f4;
     text-decoration: none;
     font-family: 'Pretendard', sans-serif;
 }
@@ -26,19 +30,19 @@
 }
 
 a:link {
-    color: #1e1e1e;
+    color: #f9f8f4;
 }
 
 a:visited {
-    color: #1e1e1e;
+    color: #f9f8f4;
 }
 
 a:hover {
-    color: #1e1e1e;
+    color: #f9f8f4;
 }
 
 a:active {
-    color: #1e1e1e;
+    color: #f9f8f4;
 }
 
 .nav-buttons {
@@ -63,13 +67,12 @@ button:hover {
 
 .primary-button {
     display: inline-block;
-    background-color: #1e1e1e;
+    background-color: #f9f8f4;
     border-radius: 2px;
     /* 너비와 높이가 같으므로 50%로 설정하면 동그라미 모양이 됩니다 */
     text-decoration: none;
     text-align: center;
     font-weight: bold;
-
     padding: 10px 25px;
 }
 
@@ -89,3 +92,169 @@ button:hover {
     align-items: center;
     gap: 20px;
 }
+
+/* 상단 박스 부분(메인 포스트 표시될 부분) */
+
+.top-container {
+    background-color: #1E1E1E;
+    height: 520px;
+    width: 100%;
+    color: #fff;
+    font-family: 'Pretendard', sans-serif;
+    display: flex;
+}
+
+.top-container h3{
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.top-container p{
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+/* .top-container  */
+.container{
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between;
+    align-items: center;
+    height: 415px;
+
+    /* 따로 추가한 코드(DW) */
+    width: 1024px;
+    margin: auto;
+}
+
+.top-container .container .post-info-box{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: -60px;
+    gap: 8px;
+    /* position: absolute; */
+    color: #fff;
+    z-index: 1;
+    height: auto;
+    width: 40%;
+    line-height: 2;
+}
+
+.top-container .readmore{
+    background-color: #3a3a3a;
+    color: #f9f8f4;
+    border-radius: 2px;
+    padding: 8px 18px;
+    width: fit-content;
+    font-size: 14px;
+
+    margin-top: 50px;
+}
+
+.top-container .readmore:hover{
+    background-color: #474747;
+    transition: transform 0.8s;
+}
+
+
+
+
+/* .top-container .container .thumnail-img{
+    display: flex;
+    opacity: 0.3;
+    height: -webkit-fill-available;
+} */
+
+.top-container .container .thumnail-img img{
+    object-fit: cover;
+    min-width: 600px;
+    min-height: -webkit-fill-available;
+    width: 100%; 
+    height: 100%;
+    opacity: 0.3; 
+}
+
+.post-box{
+    /* background-color: rgb(128, 172, 140); */
+    display: block;
+    padding: 54px 0px;
+}
+
+.post-container{
+    width: 1024px;
+    margin: auto;    
+    display: flex;
+    gap: 38px; 
+    flex-wrap: wrap; 
+}
+
+.card{
+    width: calc((100% - (2 * 38px)) / 3); 
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card:hover {
+    transform: scale(1.01); /* Slightly scale the card */
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1); /* Add shadow */
+    background-color: #f5f5f5; /* Change background color */
+    transition: transform 0.8s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.card-info-box {
+    display: flex;
+    flex-direction: column;
+    height: 160px;
+    color: #1e1e1e;
+    font-family: 'Pretendard', sans-serif;
+
+    width: 1024px;
+    margin: auto;
+    display: flex;
+    /* gap: 20px;  */
+    flex-wrap: wrap; 
+}
+
+
+.card-info-box h3{
+    font-size: 20px;
+    font-weight: 700;
+
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.card-info-box p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+/* footer 부분 */
+
+
+.footer{
+    width: 100%;
+    background-color: #e7e3da;
+    height: 200px;
+    display: flex;
+    justify-content: end;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.footer-container{
+    align-items: self-end;
+    display: flex;
+}
+
+.footer-container p{
+    color: #1e1e1e;
+    justify-content: end;
+}
+
+span{
+    font-weight: bold;
+}
+
