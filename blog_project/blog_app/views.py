@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
@@ -30,7 +30,9 @@ def board_admin(request):
     # return render(request, "board_admin.html", context)
     #   이런식으로 조회수 높은 여섯개 가져오기 (?)
 
-    return render(request, "board_admin.html")
+    posts = Post.objects.all()
+    # db에 저장된 글들 불러오기
+    return render(request, "board_admin.html", {"posts": posts})
 
 
 def board_client(request):
@@ -52,6 +54,18 @@ def post(request):
     else:
         form = PostForm()
     return render(request, "post.html", {"form": form})
+
+
+# 될지 안될지 모르는 view_post 부분
+def view_post(request, post_id):
+    article = get_object_or_404(Post, pk=post_id)
+    # 해당 게시물의 방문 횟수누적증가
+    article.increment_visit_count()
+
+    context = {
+        "post": post,
+    }
+    return render(request, "post.html", context)
 
 
 def write(request):
