@@ -30,7 +30,9 @@ def board_admin(request):
     # return render(request, "board_admin.html", context)
     #   이런식으로 조회수 높은 여섯개 가져오기 (?)
 
-    return render(request, "board_admin.html")
+    posts = Post.objects.all()
+    # db에 저장된 글들 불러오기
+    return render(request, "board_admin.html", {"posts": posts})
 
 
 def board_client(request):
