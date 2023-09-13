@@ -23,10 +23,23 @@ def login(request):
 
 
 def board_admin(request):
+    # top_posts = Post.objects.order_by("-views")[:6]
+    # context = {
+    #     "top_posts": top_posts,
+    # }
+    # return render(request, "board_admin.html", context)
+    #   이런식으로 조회수 높은 여섯개 가져오기 (?)
+
     return render(request, "board_admin.html")
 
 
 def board_client(request):
+    # top_posts = Post.objects.order_by("-views")[:6]
+    # context = {
+    #     "top_posts": top_posts,
+    # }
+    # return render(request, "board_admin.html", context)
+    #   이런식으로 조회수 높은 여섯개 가져오기 (?)
     return render(request, "board_client.html")
 
 
