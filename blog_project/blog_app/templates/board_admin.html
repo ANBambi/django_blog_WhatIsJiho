@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/board_admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/temp.css' %}">
     <title>board-admin</title>
 </head>
 
@@ -31,7 +32,7 @@
                     <button>IT</button></a>
                 </div>
                 <div class="row-box">
-                <!-- {% comment %} {% if user.is_authenticated %}
+                {% if user.is_authenticated %}
                 <a href="#" class="logout-button">Logout</a>
                 <a
                     href="#"
@@ -43,7 +44,7 @@
                     href="#"
                     class="primary-button"
                     style="color: #1e1e1e">Login</a>
-                {% endif %} {% endcomment %} -->
+                {% endif %}
                 </div>
             </div>
         </div>
@@ -52,8 +53,8 @@
     <div class="top-container">
         <div class="container">
             <div class="post-info-box">
-                <h3 class="main-title">Lorem ipsum dolor</h3>
-                <p class="main-info">가나다라마어 ㅣ러ㅣ너링러ㅣㅇ러ㅣㅏㅇ러ㅣㅇ러ㅣㅇ러이러ㅣ러ㅣ러ㅣ러ㅣㅓ리러가나다라마어 ㅣ러ㅣ너링러ㅣㅇ러ㅣㅏㅇ러ㅣㅇ러ㅣㅇ러이러ㅣ러ㅣ러ㅣ러ㅣㅓ리러</p>
+                <h3 class="main-title">'유저이름'님 환영합니다. </h3>
+                <p class="main-info">이쪽부분은 수정버튼을 따로 추가 한 다음, main-info 테이블을 만들어서 관리하는 기능을 추가하면 어떤가 하는 생각이 듭니다.</p>
                 <button class="readmore">READ MORE</button>
             </div>
             <div class= "thumnail-img">
@@ -61,23 +62,30 @@
             </div>
         </div>
     </div>
-    
-{% comment %} 메인 : 포스트 리스트 부분 {% endcomment %}
-    <section class= "post-box">
-        <div class= "post-container">
-            <img src="{% static 'img/white_logo.svg' %}" class="card">
-            <img src="{% static 'img/white_logo.svg' %}" class="card">
-            <img src="{% static 'img/white_logo.svg' %}" class="card">
-        </div>
-        <div class="card-info-box">
-            <h3>POST TITLE</h3>
-        </div>
-    </section>
 
-    <div class="footer">
-        <div class="footer-container">
-            <p>Made with</p><span>Django</span>
+
+    <header>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Enter an ingredient...">
+            <button id="searchButton">Search</button>
+        </div>
+    </header>
+
+    <div id="mealList" class="meal-list"></div>
+    <div class="modal-container">
+        <button id="recipeCloseBtn" class="close-button">&times;</button>
+        <div class="meal-details-content">
+            <!-- Content from js will be inserted here -->
         </div>
     </div>
+
+    
+
+
+
+
+ 
+    
+    <script src="{% static 'js/admin_script.js' %}"></script>
 </body>
 </html>
