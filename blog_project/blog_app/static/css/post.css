@@ -9,10 +9,10 @@
   height: 104px;
   position: fixed;
   top: 0;
-  background-color: #1e1e1e;
+  background-color: #f9f8f4;
   width: 100%;
   z-index: 999;
-  color: #f9f8f4;
+  color: #1e1e1e;
   text-decoration: none;
   font-family: 'Pretendard', sans-serif;
 }
@@ -26,19 +26,19 @@
 }
 
 a:link {
-  color: #f9f8f4;
+  color: #1E1E1E;
 }
 
 a:visited {
-  color: #f9f8f4;
+  color: #1E1E1E;
 }
 
 a:hover {
-  color: #f9f8f4;
+  color: #1E1E1E;
 }
 
 a:active {
-  color: #f9f8f4
+  color: #1E1E1E;
 }
 
 .nav-buttons {
@@ -89,3 +89,29 @@ button:hover {
   align-items: center;
   gap: 20px;
 }
+
+
+
+/* footer 부분 */
+/* .footer{
+  width: 100%;
+  background-color: #e7e3da;
+  height: 200px;
+  display: flex;
+  justify-content: end;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.footer-container{
+  align-items: self-end;
+  display: flex;
+}
+
+.footer-container p{
+  color: #1e1e1e;
+  justify-content: end;
+}
+
+span{
+  font-weight: bold;
+} */
