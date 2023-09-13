@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/post.css' %}">
+
     <title>post</title>
 </head>
 
 <body>
-    {% comment %} 상단 메뉴바 {% endcomment %}
+    <!-- {% comment %} 상단 메뉴바 {% endcomment %} -->
     <div class="nav-bar">
         <div class="nav-container">
             <div>
@@ -48,6 +49,40 @@
             </div>
         </div>
     </div>
+    <section class= "container">
+        <div class="post-zone">
+            <div class= "post-box">
+                <h6>작성일자</h6>
+                <h1>포스트 제목</h1>
+                <h6>작성자</h6>
+                <button class="post-topic">일상</button>
+                <p>가나다라라라아아아아아아아아아아아아아</p>
+                <img src="{% static 'img/card.svg' %}" alt="" />
+                <p>Lorem ipsum dolor sit amet consectetur. Non pretium arcu praesent cursus aliquam pellentesque. Euismod consectetur fames vitae nunc gravida morbi felis porttitor integer. Ridiculus id purus feugiat et mi justo scelerisque euismod euismod. Turpis dictumst luctus nisi placerat purus dolor luctus vitae pretium. Gravida faucibus scelerisque quis mi consequat malesuada.</p>
+            </div>
+            <!-- <div class="box-divider">dd</div> -->
+            <div class= "small-box">
+                <div>
+                    <h3>어쩌구저쩌구</h3>
+                    <img src="{% static 'img/card.svg' %}" alt=""/>
+                </div>
+                <div>
+                    <h3>어쩌구저쩌구</h3>
+                    <img src="{% static 'img/card.svg' %}" alt=""/>
+                </div>
+            </div>
+        </div>
+        <div class="button-box">
+            <button class = "update">수정하기</button>
+            <button class = "update">삭제하기</button>
+            <button class = "update">공유하기</button>
+            <p>다음글</p>
+            <p>다음글</p>
+        </div>
+    </section>
+    
+
+
     <div class="footer">
         <div class="footer-container">
             <p>Made with</p><span>Django</span>
