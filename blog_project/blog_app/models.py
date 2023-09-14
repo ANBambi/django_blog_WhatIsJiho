@@ -22,3 +22,7 @@ class Post(models.Model):
     @property
     def view_count(self):
         return self.visit_count
+
+
+class admin_info(models.Model):
+    information = models.CharField(max_length=200)

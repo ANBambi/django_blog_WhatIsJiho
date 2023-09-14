@@ -150,6 +150,30 @@
 </div>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // html 문서가 완전히 파싱 된 후 이벤트 발생
+    
+        // 이미지 업로드 후 에디터 내에 이미지 삽입
+        document.getElementById('imageUpload').addEventListener('change', function() {
+          let formData = new FormData();
+          formData.append('file', this.files[0]);
+    
+          fetch('{% url "image_upload" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}'
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            tinyMCE.activeEditor.insertContent(`<img src="${data.location}"/>`);
+          })
+          .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
 <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
 <script src="{% static 'js/write_scripts.js' %}"></script>
 </html>
