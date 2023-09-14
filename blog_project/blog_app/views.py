@@ -3,6 +3,11 @@ from .forms import PostForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Post
+from django.http import JsonResponse
+from django.conf import settings
+from django.views import View
+from django.core.files.storage import default_storage
+from django.contrib.auth.models import User
 
 
 def login(request):
@@ -31,8 +36,10 @@ def board_admin(request):
     #   이런식으로 조회수 높은 여섯개 가져오기 (?)
 
     posts = Post.objects.all()
+    users = User.objects.filter(username='admin').values('username')
+    
     # db에 저장된 글들 불러오기
-    return render(request, "board_admin.html", {"posts": posts})
+    return render(request, "board_admin.html", {"posts": posts, "users": users})
 
 
 def board_client(request):
@@ -87,5 +94,21 @@ def write(request):
         return redirect("board_admin")
     return render(request, "write.html")
 
+# 이미지 업로드
+class image_upload(View):
+    # 사용자가 이미지 업로드 하는경우 실행
+    def post(self, request):
+        # file필드 사용해 요청에서 업로드한 파일 가져옴
+        file = request.FILES["file"]
 
-# Create your views here.
+        # 저장 경로 생성
+        filepath = "uploads/" + file.name
+
+        # 파일 저장
+        filename = default_storage.save(filepath, file)
+
+        # 파일 URL 생성
+        file_url = settings.MEDIA_URL + filename
+
+        # 이미지 업로드 완료시 JSON 응답으로 이미지 파일의 url 반환
+        return JsonResponse({"location": file_url})
