@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # 나머지 URL 패턴들을 추가
@@ -11,4 +12,7 @@ urlpatterns = [
     path("board_client", views.board_client, name="board_client"),
     path("post", views.post, name="post"),
     path("write", views.write, name="write"),
+    path("image-upload/", views.image_upload.as_view(), name="image_upload"),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
