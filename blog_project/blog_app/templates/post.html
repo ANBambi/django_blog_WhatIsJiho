@@ -5,16 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/post.css' %}">
+    {% comment %} <link rel="stylesheet" type="text/css" href="post.css"> {% endcomment %}
 
     <title>post</title>
 </head>
 
 <body>
-    <!-- {% comment %} 상단 메뉴바 {% endcomment %} -->
+    {% comment %} 상단 메뉴바 {% endcomment %}
     <div class="nav-bar">
         <div class="nav-container">
             <div>
                 <a href="#">
+                    {% comment %} <img src= "\django_blog_WhatIsJiho\blog_project\blog_app\static\img\black_logo.svg" alt="" /> {% endcomment %}
                     <img src="{% static 'img/black_logo.svg' %}" alt="" />
                 </a>
             </div>
@@ -52,41 +54,125 @@
     <section class= "container">
         <div class="post-zone">
             <div class= "post-box">
-                <h6>작성일자</h6>
-                <h1>포스트 제목</h1>
-                <h6>작성자</h6>
-                <button class="post-topic">일상</button>
-                <p>가나다라라라아아아아아아아아아아아아아</p>
-                <img src="{% static 'img/card.svg' %}" alt="" />
-                <p>Lorem ipsum dolor sit amet consectetur. Non pretium arcu praesent cursus aliquam pellentesque. Euismod consectetur fames vitae nunc gravida morbi felis porttitor integer. Ridiculus id purus feugiat et mi justo scelerisque euismod euismod. Turpis dictumst luctus nisi placerat purus dolor luctus vitae pretium. Gravida faucibus scelerisque quis mi consequat malesuada.</p>
+                <div class = "post-info">
+                    <h5>조회수: {{ post.view_count }}</h5>
+                    <h1>포스트 제목 : {{ post.title }}</h1>
+                    <h5>작성자 : by {{ post.author_id }}</h5>
+                    <h5 class="post-topic">토픽명 : 일상{{ post.topic }}</h5>
+                </div>
+                <div class = "post-content">
+                    {{ post.content | safe }}
+                    <p>게시글 내용 및 이미지</p>
+                    <img src="{% static 'img/card.svg' %}" alt="" />
+                    <p>Lorem ipsum dolor sit amet consectetur. Non pretium arcu praesent cursus aliquam pellentesque. Euismod consectetur fames vitae nunc gravida morbi felis porttitor integer. Ridiculus id purus feugiat et mi justo scelerisque euismod euismod. Turpis dictumst luctus nisi placerat purus dolor luctus vitae pretium. Gravida faucibus scelerisque quis mi consequat malesuada.</p>
+                </div>
             </div>
-            <!-- <div class="box-divider">dd</div> -->
+            {% comment %} 추천포스트 영역 {% endcomment %}
             <div class= "small-box">
                 <div>
-                    <h3>어쩌구저쩌구</h3>
-                    <img src="{% static 'img/card.svg' %}" alt=""/>
-                </div>
-                <div>
-                    <h3>어쩌구저쩌구</h3>
+                    <h3>어쩌구저쩌구</br>추천포스트</h3>
                     <img src="{% static 'img/card.svg' %}" alt=""/>
                 </div>
             </div>
+            <!-- {% comment %} js 적용 후 주석 취소
+            <div class="small-box">
+                <div>
+                    <h3>Other posts</br>you may like</h3>
+                    {% for recommended_post in recommended_posts %}
+                        <div class="recommend-box">
+                            <a href="{% url 'blog_app:post_detail' recommended_post.id %}">
+                                {{ recommended_post.image_tag|safe }}
+                                {{ recommended_post.title }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endcomment %} -->
         </div>
+        {% comment %} 수정삭제공유 버튼부분 {% endcomment %}
         <div class="button-box">
-            <button class = "update">수정하기</button>
-            <button class = "update">삭제하기</button>
-            <button class = "update">공유하기</button>
-            <p>다음글</p>
-            <p>다음글</p>
+            <div class="post-zone" style="gap:10px">
+                <a href="*">
+                    <button class="edit-button">수정하기</button>
+                <a href="*">
+                    <button class="delete-button">삭제하기</button>
+                <a href="*">
+                    <button class="share-button">공유하기</button>
+            </div>
         </div>
+
+        {% comment %} <div class="button-box">
+            {% if user.is_authenticated %}
+            <div class="post-zone" style="gap:10px">
+                수정버튼
+                <a href="{% url 'blog_app:create_or_update_post' post.id %}">
+                <button class="edit-button">수정하기</button>
+                </a>
+                삭제버튼
+                <form method="POST" action="{% url 'blog_app:post_detail' post.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="delete-button" value="true">
+                <button type="submit" class="delete-button">삭제하기</button>
+                </form>
+            </div>
+            {% endif %}
+            공유버튼
+            <button class="share-button">공유하기</button>
+        </div> {% endcomment %}
+
+        <!-- {% comment %} 다음글 이전글 {% endcomment %} -->
+        <div class="another-post-box">
+            <div class="another-post">
+                <div>다음글</div>
+                <div class="post-name">
+                    <a href="*">다음글의 제목입니다.</a>
+                </div>
+            </div>
+            <div class="another-post">
+                <div>이전글</div>
+                <div class="post-name">
+                    <a href="*">이전글의 제목입니다.</a>
+                </div>
+            </div>
+        </div>
+        {% comment %} {% if next_post %}
+        <div class="another-post-box">
+            <div class="another-post">
+                <div>다음글</div>
+                <div class="post-name">
+                    <a href="{% url 'blog_app:post_detail' next_post.id %}"
+                        >{{ next_post.title }}</a>
+                </div>
+            </div>
+            <p>{{ next_post.created_at }}</p>
+        </div>
+        {% else %}
+        <div class="another-post-box"></div>
+        {% endif %}
+
+        <!-- 이전글 표시 -->
+        {% if previous_post %}
+        <div class="another-post-box">
+            <div class="another-post">
+                <div>이전글</div>
+                <div class="post-name">
+                    <a href="{% url 'blog_app:post_detail' previous_post.id %}"
+                >{{ previous_post.title }}</a>
+                </div>
+            </div>
+            <p>{{ previous_post.created_at }}</p>
+        </div>
+        {% else %}
+        <div class="another-post-box"></div>
+        {% endif %}
+        </div> {% endcomment %}
     </section>
     
-
-
     <div class="footer">
         <div class="footer-container">
-            <p>Made with</p><span>Django</span>
+            <p>Made with <span>Django</span></p>
         </div>
     </div>
 </body>
+<script src="{% static 'js/post.js' %}"></script>
 </html>

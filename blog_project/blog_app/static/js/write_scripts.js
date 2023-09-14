@@ -1,8 +1,8 @@
 tinymce.init({
-    selector: 'textarea#default',
+    selector: '#content',
     plugins: 'fullscreen',
     toolbar: 'fullscreen',
-    width: 800,
+    width: 1000,
     height: 500,
     plugins:[
         'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
