@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,57 +21,51 @@
             </div>
             <div class="nav-buttons">
                 <div class="nav-topics">
-                <a href="#">
-                    <button>일상</button></a>
-                <a href="#">
-                    <button>요리</button></a>
-                <a href="#">
-                    <button>여행</button></a>
-                <a href="#">
-                    <button>영화</button></a>
-                <a href="#">
-                    <button>IT</button></a>
+                    <a href="#">
+                        <button>일상</button></a>
+                    <a href="#">
+                        <button>요리</button></a>
+                    <a href="#">
+                        <button>여행</button></a>
+                    <a href="#">
+                        <button>영화</button></a>
+                    <a href="#">
+                        <button>IT</button></a>
                 </div>
                 <div class="row-box">
                     {% if user.is_authenticated %}
                     <a href="{% url 'logout' %}" class="logout-button">Logout</a>
-                    <a
-                        href="{% url 'write' %}"
-                        class="primary-button"
-                        style="color: #1e1e1e">
+                    <a href="{% url 'write' %}" class="primary-button" style="color: #1e1e1e">
                         Just Write!</a>
                     {% else %}
-                    <a
-                        href="{% url 'login' %}"
-                        class="primary-button"
-                        style="color: #1e1e1e">Login</a>
+                    <a href="{% url 'login' %}" class="primary-button" style="color: #1e1e1e">Login</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
-{% comment %} 상단: 메인 포스트 표시될 부분 {% endcomment %}
+    {% comment %} 상단: 메인 포스트 표시될 부분 {% endcomment %}
     <div class="top-container">
         <div class="container">
             <div class="post-info-box">
                 <h3 class="main-title">
                     {% for user in users %}
-                        <li>{{ user.username }}님 환영합니다. </li>
+                    <li>{{ user.username }}님 환영합니다. </li>
                     {% empty %}
-                        <li>No users found.</li>
+                    <li>No users found.</li>
                     {% endfor %}
                 </h3>
                 <p class="main-info">이쪽부분은 수정버튼을 따로 추가 한 다음, main-info 테이블을 만들어서 관리하는 기능을 추가하면 어떤가 하는 생각이 듭니다.</p>
                 <button class="readmore">READ MORE</button>
             </div>
-            <div class= "thumnail-img">
+            <div class="thumnail-img">
                 {% comment %} <img src="{% static 'img/card.svg'%}" class=""> {% endcomment %}
             </div>
         </div>
     </div>
 
 
-    
+
     <header>
         <div class="search">
             <input type="text" id="searchInput" placeholder="Enter an ingredient...">
@@ -86,13 +81,19 @@
         </div>
     </div>
 
-    
 
 
 
 
- 
-    
+
+
+
     <script src="{% static 'js/admin_script.js' %}"></script>
+    <div class="footer">
+        <div class="footer-container">
+            <p>Made with </p><span>Django</span>
+        </div>
+    </div>
 </body>
+
 </html>

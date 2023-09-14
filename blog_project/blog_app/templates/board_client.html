@@ -1,10 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/board_admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/temp.css' %}">
     <title>board-admin</title>
 </head>
 
@@ -19,65 +21,85 @@
             </div>
             <div class="nav-buttons">
                 <div class="nav-topics">
-                <a href="#">
-                    <button>일상</button></a>
-                <a href="#">
-                    <button>요리</button></a>
-                <a href="#">
-                    <button>여행</button></a>
-                <a href="#">
-                    <button>영화</button></a>
-                <a href="#">
-                    <button>IT</button></a>
+                    <a href="#">
+                        <button>일상</button></a>
+                    <a href="#">
+                        <button>요리</button></a>
+                    <a href="#">
+                        <button>여행</button></a>
+                    <a href="#">
+                        <button>영화</button></a>
+                    <a href="#">
+                        <button>IT</button></a>
                 </div>
                 <div class="row-box">
                     {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="logout-button">Logout</a>
-                <a
-                    href="{% url 'write' %}"
-                    class="primary-button"
-                    style="color: #1e1e1e">
-                    Just Write!</a>
-                {% else %}
-                <a
-                    href="{% url 'login' %}"
-                    class="primary-button"
-                    style="color: #1e1e1e">Login</a>
-                {% endif %}
+                    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+                    <a href="{% url 'write' %}" class="primary-button" style="color: #1e1e1e">
+                        Just Write!</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="primary-button" style="color: #1e1e1e">Login</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-{% comment %} 상단: 메인 포스트 표시될 부분 {% endcomment %}
+    {% comment %} 상단: 메인 포스트 표시될 부분 {% endcomment %}
     <div class="top-container">
         <div class="container">
             <div class="post-info-box">
                 <h3 class="main-title">Lorem ipsum dolor</h3>
-                <p class="main-info">가나다라마어 ㅣ러ㅣ너링러ㅣㅇ러ㅣㅏㅇ러ㅣㅇ러ㅣㅇ러이러ㅣ러ㅣ러ㅣ러ㅣㅓ리러가나다라마어 ㅣ러ㅣ너링러ㅣㅇ러ㅣㅏㅇ러ㅣㅇ러ㅣㅇ러이러ㅣ러ㅣ러ㅣ러ㅣㅓ리러</p>
+                <p class="main-info">메인텍스트부분 - 조회수 중심으로 뜨도록 해야겠죠?</p>
                 <button class="readmore">READ MORE</button>
             </div>
-            <div class= "thumnail-img">
+            <div class="thumnail-img">
                 {% comment %} <img src="{% static 'img/card.svg'%}" class=""> {% endcomment %}
             </div>
         </div>
     </div>
-    
-{% comment %} 메인 : 포스트 리스트 부분 {% endcomment %}
-    <section class= "post-box">
-        <div class= "post-container">
+
+    {% comment %} 메인 : 포스트 리스트 부분 {% endcomment %}
+
+    <header>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Enter an ingredient...">
+            <button id="searchButton">Search</button>
+        </div>
+    </header>
+
+    <div id="mealList" class="meal-list"></div>
+    <div class="modal-container">
+        <button id="recipeCloseBtn" class="close-button">&times;</button>
+        <div class="meal-details-content">
+            <!-- Content from js will be inserted here -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="{% static 'js/admin_script.js' %}"></script>
+
+    <!-- <section class="post-box">
+        <div class="post-container">
             <img src="{% static 'img/white_logo.svg' %}" class="card">
             <img src="{% static 'img/white_logo.svg' %}" class="card">
             <img src="{% static 'img/white_logo.svg' %}" class="card">
         </div>
         <div class="card-info-box">
             <h3>POST TITLE</h3>
-        </div>
-    </section>
+        </div>  이건 그 전에 가지고 있던 mylog 사진 3개
+    </section> -->
 
     <div class="footer">
         <div class="footer-container">
-            <p>Made with</p><span>Django</span>
+            <p>Made with </p><span>Django</span>
         </div>
     </div>
 </body>
+
 </html>
