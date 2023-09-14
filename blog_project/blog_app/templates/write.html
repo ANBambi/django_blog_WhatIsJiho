@@ -50,26 +50,106 @@
             </div>
         </div>
     </div>
+
     <div class="content">
-      <div class="text">
-        <div class="write-box">
-          <input type="text" id="title" name="title" class="title" placeholder="제목" value="{{ post.title }}"
-            />
-        </div>
-        <form action="" method="post">
-          <textarea name="textarea" id="default" cols="30" rows="10"></textarea>
+        <div class="post-container">
+            <div class="big-box">
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="write-box">
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="title"
+                    placeholder="제목"
+                    value="{{ post.title }}"
+                  />
+                  
+      
+                  <textarea
+                    id="content"
+                    name="content"
+                  >{{ post.content}}</textarea>
+      
+                </div>
+                <div class="post-info-box">
+                  <button type="button" id="aiAutocompleteButton" class="ai-button">
+                    <img id="ai-img" src="{% static 'img/ai.svg' %}" alt="AI 아이콘" />
+                    <div id="loading-animation" style="display: none;">
+                      <img src="{% static 'img/loading.gif' %}" alt="로딩 중" />
+                    </div> 
+                    AI 글 자동완성
+                  </button>
+                             
+                  <div class="box">
+                    <h2>TOPIC</h2>
+                    <div>
+                      <input type="radio" id="all" name="topic" value="전체" {% if topic == '전체' %}checked{% endif %} />
+                      <label for="all">전체</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="daily" name="topic" value="일상" {% if topic == '일상' %}checked{% endif %}/>
+                        <label for="daily">일상</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="cooking" name="topic" value="요리" {% if topic == '요리' %}checked{% endif %}//>
+                      <label for="cooking">요리</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="travel" name="topic" value="여행" {% if topic == '여행' %}checked{% endif %}//>
+                      <label for="travel">여행</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="movie" name="topic" value="영화" {% if topic == '영화' %}checked{% endif %}//>
+                      <label for="movie">영화</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="it" name="topic" value="IT" {% if topic == 'IT' %}checked{% endif %}//>
+                      <label for="it">IT / 전자기기</label>
+                    </div>
+                  </div>
+                  <div class="box">
+                    <div class="info">
+                      <h2>UPLOAD INFO</h2>
+                      <p>공개여부: {% if edit_mode %}전체공개{% else %}미공개{% endif %}</p>
+                      <input type="file" name="file" id="imageUpload" style="display:none;">
+                      <button type="button" class="button-line" onclick="document.getElementById('imageUpload').click();">이미지 업로드</button>
+                    </div>
+                    <div class="save-box">
+                      {% if edit_mode %}
+                        <input
+                          type="submit"
+                          name="delete-button" 
+                          class="delete-button"
+                          value="삭제"
+                        />
+                        <input
+                          type="submit"
+                          class="save-button"
+                          value="수정"
+                        />
+                        
+                      {% else %}
+                      <input type="submit" name="temp-save-button" class="temp-save-button" value="임시저장" />
+                      <input type="submit" name="save-button" class="save-button" value="글 작성" />
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+
         </form>
       </div>
 
     </div>
-    <div class="footer">
-        <div class="footer-container">
-            <p>Made with</p><span>Django</span>
-        </div>
+</div>
+<div class="footer">
+    <div class="footer-container">
+        <p>Made with</p><span>Django</span>
     </div>
-  </div>
+</div>
 
-    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
-    <script src="{% static 'js/write_scripts.js' %}"></script>
 </body>
+<script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+<script src="{% static 'js/write_scripts.js' %}"></script>
 </html>

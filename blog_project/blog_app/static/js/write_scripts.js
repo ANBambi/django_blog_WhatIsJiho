@@ -1,5 +1,5 @@
 tinymce.init({
-    selector: 'textarea#default',
+    selector: '#content',
     plugins: 'fullscreen',
     toolbar: 'fullscreen',
     width: 800,
