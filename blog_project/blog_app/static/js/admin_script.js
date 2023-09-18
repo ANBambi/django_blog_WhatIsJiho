@@ -5,6 +5,40 @@ const modalContainer = document.querySelector('.modal-container');
 const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('recipeCloseBtn');
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const mylogLogo = document.getElementById('mylogLogo');
+    mylogLogo.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (is_authenticated) {
+            window.location.href = '/board_admin';
+        } else {
+            window.location.href = '/board_client';
+        }
+    });
+});
+// document.cookie = "loggedIn=true";
+// document.getElementById('mylogLogo').addEventListener('click', function () {
+
+//     // 로그인 상태일 경우, admin페이지로 이동
+//     if (isLoggedIn()) {
+//         window.location.href = 'board_admin.html';
+//     } else {
+//         window.location.href = 'board_client.html';
+//     }
+// });
+
+// function isLoggedIn() {
+//     var loggedInCookie = getCookie('loggedIn');
+//     return loggedInCookie === 'true';
+// }
+
+// function getCookie(name) {
+//     var value = "; " + document.cookie;
+//     var parts = value.split("; " + name + "=");
+//     if (parts.length == 2) return parts.pop().split(";").shift();
+// }
+
 // Event listeners
 searchButton.addEventListener('click', async () => {
     const ingredient = searchInput.value.trim();
