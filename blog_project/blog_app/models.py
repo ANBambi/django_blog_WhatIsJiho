@@ -23,8 +23,12 @@ class Post(models.Model):
     def view_count(self):
         return self.visit_count
 
+    def check_url(self, *args, **kwargs):
+        if "media/uploads/" in self.content and "/media/uploads/" not in self.content:
+            self.content = self.content.replace("media/uploads/", "/media/uploads/")
+            # 'media/uploads/' 문자열을 '/media/uploads/'로 교체하여 URL 형식을 수정후 저장.
+        super().save(*args, **kwargs)
 
 
 class admin_info(models.Model):
     information = models.CharField(max_length=200)
-
