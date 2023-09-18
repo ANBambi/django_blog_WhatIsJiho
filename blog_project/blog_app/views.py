@@ -8,6 +8,7 @@ from django.conf import settings
 from django.views import View
 from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
+from bs4 import BeautifulSoup
 
 
 def login(request):
@@ -22,57 +23,76 @@ def login(request):
     return render(request, "login.html", {"form": form})
 
 
-# def custom_logout(request):
-#     logout(request)
-#     return redirect("board_client")
-
-
 def board_admin(request):
-    # top_posts = Post.objects.order_by("-views")[:6]
-    # context = {
-    #     "top_posts": top_posts,
-    # }
-    # return render(request, "board_admin.html", context)
-    #   이런식으로 조회수 높은 여섯개 가져오기 (?)
+    posts = Post.objects.order_by("-views")[:7]
+    users = User.objects.filter(username="admin").values("username")
 
-    posts = Post.objects.all()
-    users = User.objects.filter(username='admin').values('username')
-    
     # db에 저장된 글들 불러오기
     return render(request, "board_admin.html", {"posts": posts, "users": users})
 
 
 def board_client(request):
-    # top_posts = Post.objects.order_by("-views")[:6]
-    # context = {
-    #     "top_posts": top_posts,
-    # }
-    # return render(request, "board_admin.html", context)
-    #   이런식으로 조회수 높은 여섯개 가져오기 (?)
-    return render(request, "board_client.html")
+    posts = Post.objects.order_by("-views")[:7]
+
+    return render(request, "board_client.html", {"posts": posts})
 
 
-def post(request):
+def post(request, post_id):
+    db_post = get_object_or_404(Post, pk=post_id)
+
     if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("post_list")
-    else:
-        form = PostForm()
-    return render(request, "post.html", {"form": form})
+        # 삭제 요청
+        if "delete-button" in request.POST:
+            db_post.delete()
+            return redirect("board_admin")
+
+    db_post.views += 1
+    db_post.save()
+
+    # 이전/다음 게시물 가져옴
+    previous_post = Post.objects.filter(id__lt=db_post.id).order_by("-id").first()
+    next_post = Post.objects.filter(id__gt=db_post.id).order_by("id").first()
+
+    # 같은 주제인 게시물들 중 최신 글 가져옴
+    recommended_posts = (
+        Post.objects.filter(topic=db_post.topic).exclude(id=db_post.id).order_by("-create_at")[:2]
+    )
+    # 게시물 내용에서 첫번째 이미지(썸네일) 태그 추출
+    for recommended_post in recommended_posts:
+        # 이미지 경로 검사
+        recommended_post.check_url()
+        soup = BeautifulSoup(recommended_post.content, "html.parser")
+        image_tag = soup.find("img")
+        recommended_post.image_tag = str(image_tag) if image_tag else ""
+
+    # 이미지 경로 검사
+    db_post.check_url()
+    if previous_post:
+        previous_post.check_url()
+    if next_post:
+        next_post.check_url()
+
+    context = {
+        "post": db_post,
+        "previous_post": previous_post,
+        "next_post": next_post,
+        "recommended_posts": recommended_posts,
+        "MEDIA_URL": settings.MEDIA_URL,
+    }
+
+    return render(request, "post.html", context)
 
 
 # 될지 안될지 모르는 view_post 부분
-def view_post(request, post_id):
-    article = get_object_or_404(Post, pk=post_id)
-    # 해당 게시물의 방문 횟수누적증가
-    article.increment_visit_count()
+# def view_post(request, post_id):
+#     article = get_object_or_404(Post, pk=post_id)
+#     # 해당 게시물의 방문 횟수누적증가
+#     article.increment_visit_count()
 
-    context = {
-        "post": post,
-    }
-    return render(request, "post.html", context)
+#     context = {
+#         "post": post,
+#     }
+#     return render(request, "post.html", context)
 
 
 def write(request):
@@ -93,6 +113,7 @@ def write(request):
         # 일단 작성 완료시 board_client로 이동
         return redirect("board_admin")
     return render(request, "write.html")
+
 
 # 이미지 업로드
 class image_upload(View):

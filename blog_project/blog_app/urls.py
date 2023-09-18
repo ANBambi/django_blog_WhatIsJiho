@@ -10,8 +10,9 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(next_page="board_client"), name="logout"),
     path("board_admin", views.board_admin, name="board_admin"),
     path("board_client", views.board_client, name="board_client"),
-    path("post", views.post, name="post"),
+    path("post/<int:post_id>/", views.post, name="post"),
     path("write", views.write, name="write"),
+    path("edit_post/<int:post_id>/", views.write, name="write"),
     path("image-upload/", views.image_upload.as_view(), name="image_upload"),
 ]
 if settings.DEBUG:
