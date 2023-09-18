@@ -18,3 +18,15 @@ tinymce.init({
     menubar: 'favs file edit view insert format tools table',
     content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}'
 });
+
+const modalOpenBtn = document.getElementById('modal-open-btn')
+const modalCloseBtn = document.getElementById('modal-close-btn')
+const modalWrapper = document.querySelector(".modal-wrapper")
+
+modalOpenBtn.addEventListener("click", ()=>{
+    modalWrapper.computedStyleMap.display = "flex";
+})
+
+modalCloseBtn.addEventListener("click", ()=>{
+    modalWrapper.style.display - "none";
+})
