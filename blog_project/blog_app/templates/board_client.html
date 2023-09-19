@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/board_client.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/temp.css' %}">
-    <title>board-client</title>
+    <title>왜되지호</title>
 </head>
 
 <body>
@@ -90,7 +90,7 @@
               </div>
               <a href="{% url 'post' post.id %}" class="post-info-box-link">
                 <div class="card-info-box">
-                  <p>{{ post.create_at }}</p>
+                    <p>{{ post.create_at|date:' Y-m-d h:i:s ' }}</p>
                   <h3>{{ post.title }}</h3>
                   <p>{{ post.content|text_only }}</p>
                 </div>
