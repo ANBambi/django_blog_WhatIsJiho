@@ -408,10 +408,20 @@ button{
   display: none;
   justify-content: center;
   align-items: center;
+  display: flex;
+  
 }
 
 .modal-body{
   background: white;
   width: 500px;
   height: 500px;
+}
+
+.select-isDone {
+  display: none;
+}
+
+.modify-id {
+  display: none;
 }

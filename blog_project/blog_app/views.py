@@ -105,41 +105,58 @@ def post(request, post_id):
 
 
 def write(request):
-    modify = Post.objects.filter(isDone="N")
+
+
+    modify = Post.objects.filter(isDone='N')
+
 
     if request.method == "POST":
         title = request.POST["title"]
         content = request.POST["content"]
         topic = request.POST["topic"]
         createButton = request.POST.get("save-button")
-        isDone = request.POST.get("isDone")
-        post_id = request.POST.get(content)
-        post = get_object_or_404(Post, pk=post_id)
 
-        if createButton == "글 작성":
-            # 처음 작성
-            if isDone == "Y":
+        tempButton = request.POST.get("modal-save-btn")
+        isDone = request.POST.get("isDone")
+        post_id = request.POST.get("modify-id")
+        if post_id :
+            post = get_object_or_404(Post, pk=post_id)
+
+
+
+        if createButton == "글 작성" :
+            if isDone == 'Y' :
                 Post.objects.create(
-                    title=title, content=content, topic=topic, author=request.user, views=0
+                    title=title,
+                    content=content,
+                    topic=topic
                 )
-            # 처음작성이 아닌상태 (임시저장에서 불러온 상태)
-            else:
-                post.isDone = "Y"
+            else :
+                post.title = title
+                post.content = content
+                post.topic = topic
+                post.isDone = 'Y'
+                post.save()
+        elif createButton == '임시저장' :
+            if isDone == 'Y' :
+                Post.objects.create(
+                    title=title,
+                    content=content,
+                    topic=topic,
+                    isDone='N'
+                )
+            else :
+
                 post.title = title
                 post.content = content
                 post.topic = topic
                 post.save()
-                return redirect("board_admin")
+
 
         # 글작성할때
         # 임시저장이냐 or 글작성이냐
-        # Post.objects.create(
-        #     title=title,
-        #     content=content,
-        #     topic=topic,
-        #     author=request.user,  # 현재 로그인한 사용자를 작성자로 설정
-        #     views=0,  # 조회수 초기값 설정
-        # )
+
+
         # 임시저장된것을 수정할때
         # 한번더 임시저장 -> update
         # 처음 임시저장 -> create
@@ -148,21 +165,11 @@ def write(request):
 
         # 일단 작성 완료시 board_client로 이동
         return redirect("board_admin")
-    else:
+
+    else :
         pass
     return render(request, "write.html", {"modify": modify})
 
-
-def edit_post(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    if request.method == "POST":
-        post.title = request.POST["title"]
-        post.content = request.POST["content"]
-        post.topic = request.POST["topic"]
-        post.create_at = timezone.now()  # 현재 시간으로 업데이트
-        post.save()
-        return redirect("board_client")
-    return render(request, "edit_post.html", {"post": post})
 
 
 # 이미지 업로드
@@ -185,14 +192,13 @@ class image_upload(View):
         return JsonResponse({"location": file_url})
 
 
-openai.api_key = ""
 
-
-# 글 자동완성 기능
 def autocomplete(request):
     if request.method == "POST":
-        # 제목 필드값 가져옴
-        prompt = request.POST.get("title")
+
+        #제목 필드값 가져옴
+        prompt = request.POST.get('title')
+
         try:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
@@ -202,8 +208,10 @@ def autocomplete(request):
                 ],
             )
             # 반환된 응답에서 텍스트 추출해 변수에 저장
-            message = response["choices"][0]["message"]["content"]
+
+            message = response['choices'][0]['message']['content']
         except Exception as e:
             message = str(e)
         return JsonResponse({"message": message})
-    return render(request, "autocomplete.html")
+    return render(request, 'autocomplete.html')
+
