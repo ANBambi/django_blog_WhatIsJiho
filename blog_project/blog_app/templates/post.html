@@ -15,23 +15,23 @@
     <div class="nav-bar">
         <div class="nav-container">
             <div>
-                <a href="#">
+                <a href="{%url 'board_client'%}">
                     {% comment %} <img src= "\django_blog_WhatIsJiho\blog_project\blog_app\static\img\black_logo.svg" alt="" /> {% endcomment %}
                     <img src="{% static 'img/black_logo.svg' %}" alt="" />
                 </a>
             </div>
             <div class="nav-buttons">
                 <div class="nav-topics">
-                <a href="#">
-                    <button>일상</button></a>
-                <a href="#">
-                    <button>요리</button></a>
-                <a href="#">
-                    <button>여행</button></a>
-                <a href="#">
-                    <button>영화</button></a>
-                <a href="#">
-                    <button>IT</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='일상' %}">
+                        <button>일상</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='요리' %}">
+                        <button>요리</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='여행' %}">
+                        <button>여행</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='영화' %}">
+                        <button>영화</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='IT' %}">
+                        <button>IT</button></a>
                 </div>
                 <div class="row-box">
                     {% if user.is_authenticated %}
