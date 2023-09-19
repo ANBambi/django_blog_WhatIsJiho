@@ -86,7 +86,7 @@
             {% if user.is_authenticated %}
             <div class="post-zone" style="gap:10px">
                 {% comment %} <a href="{% url 'write' post.id %}"> {% endcomment %}
-                <a href="#">
+                <a href="{% url 'edit_post' post.id %}">
                 <button class="edit-button">수정하기</button>
                 </a>
                 <form method="POST" action="{% url 'post' post.id %}">

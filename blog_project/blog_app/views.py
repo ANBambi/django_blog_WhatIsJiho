@@ -9,6 +9,9 @@ from django.views import View
 from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
 from bs4 import BeautifulSoup
+from django.utils import timezone
+
+import openai
 
 
 def login(request):
@@ -16,23 +19,29 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request, "board_admin")
+            return redirect(request, "board_client")
     else:
         form = AuthenticationForm()
 
     return render(request, "login.html", {"form": form})
 
 
-def board_admin(request):
-    posts = Post.objects.order_by("-views")[:7]
-    users = User.objects.filter(username="admin").values("username")
+# def board_client(request, topic="전체"):
+#     if topic == "전체":
+#         posts = Post.objects.filter(isDone="Y").order_by("-views")[:7]
+#     else:
+#         posts = Post.objects.filter(topic=topic, isDone="Y").order_by("-views")[:7]
+#     users = User.objects.filter(username="admin").values("username")
 
-    # db에 저장된 글들 불러오기
-    return render(request, "board_admin.html", {"posts": posts, "users": users})
+#     # db에 저장된 글들 불러오기
+#     return render(request, "board_client.html", {"posts": posts, "users": users})
 
 
-def board_client(request):
-    posts = Post.objects.order_by("-views")[:7]
+def board_client(request, topic="전체"):
+    if topic == "전체":
+        posts = Post.objects.filter(isDone="Y").order_by("-views")[:7]
+    else:
+        posts = Post.objects.filter(topic=topic, isDone="Y").order_by("-views")[:7]
 
     return render(request, "board_client.html", {"posts": posts})
 
@@ -44,7 +53,7 @@ def post(request, post_id):
         # 삭제 요청
         if "delete-button" in request.POST:
             db_post.delete()
-            return redirect("board_admin")
+            return redirect("board_client")
 
     db_post.views += 1
     db_post.save()
@@ -97,13 +106,16 @@ def post(request, post_id):
 
 def write(request):
 
+
     modify = Post.objects.filter(isDone='N')
+
 
     if request.method == "POST":
         title = request.POST["title"]
         content = request.POST["content"]
         topic = request.POST["topic"]
         createButton = request.POST.get("save-button")
+
         tempButton = request.POST.get("modal-save-btn")
         isDone = request.POST.get("isDone")
         post_id = request.POST.get("modify-id")
@@ -134,13 +146,16 @@ def write(request):
                     isDone='N'
                 )
             else :
+
                 post.title = title
                 post.content = content
                 post.topic = topic
                 post.save()
 
+
         # 글작성할때
         # 임시저장이냐 or 글작성이냐
+
 
         # 임시저장된것을 수정할때
         # 한번더 임시저장 -> update
@@ -150,9 +165,11 @@ def write(request):
 
         # 일단 작성 완료시 board_client로 이동
         return redirect("board_admin")
+
     else :
         pass
     return render(request, "write.html", {"modify": modify})
+
 
 
 # 이미지 업로드
@@ -175,11 +192,13 @@ class image_upload(View):
         return JsonResponse({"location": file_url})
 
 
+
 def autocomplete(request):
     if request.method == "POST":
 
         #제목 필드값 가져옴
         prompt = request.POST.get('title')
+
         try:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
@@ -189,8 +208,10 @@ def autocomplete(request):
                 ],
             )
             # 반환된 응답에서 텍스트 추출해 변수에 저장
+
             message = response['choices'][0]['message']['content']
         except Exception as e:
             message = str(e)
         return JsonResponse({"message": message})
     return render(request, 'autocomplete.html')
+
