@@ -14,21 +14,21 @@
         <div class="nav-bar">
             <div class="nav-container">
                 <div>
-                    <a href="#">
+                    <a href="{%url 'board_client'%}">
                         <img src="{% static 'img/black_logo.svg' %}" alt="" />
                     </a>
                 </div>
                 <div class="nav-buttons">
                     <div class="nav-topics">
-                    <a href="#">
+                      <a href="{% url 'post_list_by_topic' topic='일상' %}">
                         <button>일상</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='요리' %}">
                         <button>요리</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='여행' %}">
                         <button>여행</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='영화' %}">
                         <button>영화</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='IT' %}">
                         <button>IT</button></a>
                     </div>
                     <div class="row-box">
@@ -151,13 +151,13 @@
                       <h1>임시저장목록</h1>
 
                       <ul>
-                        <p>title</p>
+                        <br>
                         {% for modi in modify %}
-                        <button id='{{modi.id}}' class='modify-button' name = "{{modi.content}}"><p>{{modi.title}} / {{modi.create_at|date:' Y-m-d h:i:s '}}</p></button>
+                        <p><button id='{{modi.id}}' class='modify-button' name = "{{modi.content}}" data-topic="{{modi.topic}}">{{modi.title}} / {{modi.create_at|date:' Y-m-d h:i:s '}}</button></p>
                         {% endfor %}
                       </ul>
 
-                      <input type='submit' name='save-button' value="임시저장">
+                      <input type='submit' id='modal-save-button' name='save-button' value="임시저장">
                       <input type='button' id='modal-close-btn' value="취소">
                     </div>
                   </div>
@@ -258,17 +258,22 @@ const nRadioButton = document.querySelector('input[name="isDone"][value="N"]');
       buttons[i].addEventListener('click', function() {
         // 클릭된 버튼에서 title과 content 정보 가져오기
         var titleInput = document.getElementById('title');
-        titleIn = this.innerText.split(' / ')[1];
+        titleIn = this.innerText.split(' / ')[0];
         var content = this.getAttribute('name');
 
         // title과 content를 tinyMCE 에디터에 추가
         tinyMCE.activeEditor.setContent(content);
         titleInput.value = titleIn;
         modalWrapper.style.display = "none";
+        toxEditor.style.display = 'flex';
+        postInfoBox.style.display = 'flex';
         document.getElementsByClassName('modify-id')[0].value = this.id;
         nRadioButton.checked = true;
+
       });
     }
+
+
     
 </script>
 <script src="{% static 'tinymce/tinymce.min.js' %}"></script>

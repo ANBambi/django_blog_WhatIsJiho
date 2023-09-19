@@ -124,7 +124,7 @@ def write(request):
 
         if createButton == "글 작성":
             if isDone == "Y":
-                Post.objects.create(title=title, content=content, topic=topic)
+                Post.objects.create(title=title, content=content, topic=topic, author=request.user)
             else:
                 post.title = title
                 post.content = content
@@ -132,8 +132,11 @@ def write(request):
                 post.isDone = "Y"
                 post.save()
         elif createButton == "임시저장":
+            # 새로 작성된 게시물
             if isDone == "Y":
-                Post.objects.create(title=title, content=content, topic=topic, isDone="N")
+                Post.objects.create(title=title, content=content, topic=topic, isDone="N", author=request.user)
+
+            # 임시저장에서 불러온 게시물
             else:
                 post.title = title
                 post.content = content
