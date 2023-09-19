@@ -67,8 +67,8 @@
                   />
 
                   <div class="select-isDone">
-                    <input type="radio" name="isDone" value="option1" checked> Y
-                    <input type="radio" name="isDone" value="option2"> N
+                    <input type="radio" name="isDone" value="Y" checked>
+                    <input type="radio" name="isDone" value="N">
                   </div>
       
                   <textarea
@@ -133,20 +133,36 @@
                           class="save-button"
                           value="수정"
                         />
-                        
-                      {% else %}
-                      <input type="submit" name="temp-save-button" class="temp-save-button"
-                      id="add_feed"
-                      value="임시저장" />
-                      <input type="submit" name="save-button" class="save-button" value="글 작성" />
+                        {% else %}
+                        <input type="button" name="temp-save-button" class="temp-save-button"
+                        id="modal-open-btn"
+                        value="임시저장" />
+                        <input type="submit" name="save-button" class="save-button" value="글 작성" />
+                        <input type="text" name='modify-id' class='modify-id' value=''>
                       {% endif %}
                     </div>
                   </div>
 
                 </div>
+
+                <div class="modal-wrapper">
+                  <div class="modal-body">
+                    <div class="modal-head">
+                      <h1>임시저장목록</h1>
+
+                      <ul>
+                        <p>title</p>
+                        {% for modi in modify %}
+                        <button id='{{modi.id}}' class='modify-button' name = "{{modi.content}}"><p>{{modi.title}} / {{modi.create_at|date:' Y-m-d h:i:s '}}</p></button>
+                        {% endfor %}
+                      </ul>
+
+                      <input type='submit' name='save-button' value="임시저장">
+                      <input type='button' id='modal-close-btn' value="취소">
+                    </div>
+                  </div>
+                </div>
           </form>
-
-          <button id="modal-open-btn">임시저장</button>
         </div>
 
       </div>
@@ -154,23 +170,6 @@
   
     </div>
 
-    
-
-    <div class="modal-wrapper">
-      <div class="modal-body">
-        <div class="modal-head">
-          <h1>임시저장목록</h1>
-          <ul>
-            <p>title</p>
-            {% for modi in modify %}
-            <button id='{{modi.id}}' class='modify-button' name = "{{modi.content}}"><p>{{modi.title}} / {{modi.create_at}}</p></button>
-            {% endfor %}
-          </ul>
-          <button id='modal-select-btn'>임시저장</button>
-          <button id='modal-close-btn'>취소</button>
-        </div>
-      </div>
-    </div>
 
 <div class="footer">
     <div class="footer-container">
@@ -224,45 +223,20 @@
 
 
 var buttons = document.getElementsByClassName('modify-button');
-
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function() {
-        var buttonId = this.id; // 클릭된 버튼의 id 가져오기
-
-        // AJAX 요청 보내기
-        fetch('/your-api-endpoint/' + buttonId + '/')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                var title = data.title;
-                var content = data.content;
-                
-                // title과 content를 tinyMCE 에디터에 추가
-                tinyMCE.activeEditor.setContent('<h2>' + title + '</h2>' + content);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-}
-
-var buttons = document.getElementsByClassName('modify-button');
-
+const nRadioButton = document.querySelector('input[name="isDone"][value="N"]');
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', function() {
         // 클릭된 버튼에서 title과 content 정보 가져오기
         var titleInput = document.getElementById('title');
-        titleIn = this.innerText.split(' / ')[0];
+        titleIn = this.innerText.split(' / ')[1];
         var content = this.getAttribute('name');
 
         // title과 content를 tinyMCE 에디터에 추가
         tinyMCE.activeEditor.setContent(content);
         titleInput.value = titleIn;
         modalWrapper.style.display = "none";
+        document.getElementsByClassName('modify-id')[0].value = this.id;
+        nRadioButton.checked = true;
       });
     }
     

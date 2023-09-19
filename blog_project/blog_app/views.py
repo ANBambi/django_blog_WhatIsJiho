@@ -96,23 +96,63 @@ def post(request, post_id):
 
 
 def write(request):
+
+    modify = Post.objects.filter(isDone='N')
+
     if request.method == "POST":
         title = request.POST["title"]
         content = request.POST["content"]
         topic = request.POST["topic"]
+        createButton = request.POST.get("save-button")
+        tempButton = request.POST.get("modal-save-btn")
+        isDone = request.POST.get("isDone")
+        post_id = request.POST.get("modify-id")
+        if post_id :
+            post = get_object_or_404(Post, pk=post_id)
 
-        Post.objects.create(
-            title=title,
-            content=content,
-            topic=topic,
-            author=request.user,  # 현재 로그인한 사용자를 작성자로 설정
-            views=0,  # 조회수 초기값 설정
-        )
+
+
+        if createButton == "글 작성" :
+            if isDone == 'Y' :
+                Post.objects.create(
+                    title=title,
+                    content=content,
+                    topic=topic
+                )
+            else :
+                post.title = title
+                post.content = content
+                post.topic = topic
+                post.isDone = 'Y'
+                post.save()
+        elif createButton == '임시저장' :
+            if isDone == 'Y' :
+                Post.objects.create(
+                    title=title,
+                    content=content,
+                    topic=topic,
+                    isDone='N'
+                )
+            else :
+                post.title = title
+                post.content = content
+                post.topic = topic
+                post.save()
+
+        # 글작성할때
+        # 임시저장이냐 or 글작성이냐
+
+        # 임시저장된것을 수정할때
+        # 한번더 임시저장 -> update
+        # 처음 임시저장 -> create
+
         # create_at은 현재 시간으로 model에서 설정
 
         # 일단 작성 완료시 board_client로 이동
         return redirect("board_admin")
-    return render(request, "write.html")
+    else :
+        pass
+    return render(request, "write.html", {"modify": modify})
 
 
 # 이미지 업로드
@@ -133,3 +173,24 @@ class image_upload(View):
 
         # 이미지 업로드 완료시 JSON 응답으로 이미지 파일의 url 반환
         return JsonResponse({"location": file_url})
+
+
+def autocomplete(request):
+    if request.method == "POST":
+
+        #제목 필드값 가져옴
+        prompt = request.POST.get('title')
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt},
+                ],
+            )
+            # 반환된 응답에서 텍스트 추출해 변수에 저장
+            message = response['choices'][0]['message']['content']
+        except Exception as e:
+            message = str(e)
+        return JsonResponse({"message": message})
+    return render(request, 'autocomplete.html')
