@@ -9,6 +9,9 @@ from django.views import View
 from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
 from bs4 import BeautifulSoup
+from django.utils import timezone
+
+import openai
 
 
 def login(request):
@@ -16,23 +19,29 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request, "board_admin")
+            return redirect(request, "board_client")
     else:
         form = AuthenticationForm()
 
     return render(request, "login.html", {"form": form})
 
 
-def board_admin(request):
-    posts = Post.objects.order_by("-views")[:7]
-    users = User.objects.filter(username="admin").values("username")
+# def board_client(request, topic="전체"):
+#     if topic == "전체":
+#         posts = Post.objects.filter(isDone="Y").order_by("-views")[:7]
+#     else:
+#         posts = Post.objects.filter(topic=topic, isDone="Y").order_by("-views")[:7]
+#     users = User.objects.filter(username="admin").values("username")
 
-    # db에 저장된 글들 불러오기
-    return render(request, "board_admin.html", {"posts": posts, "users": users})
+#     # db에 저장된 글들 불러오기
+#     return render(request, "board_client.html", {"posts": posts, "users": users})
 
 
-def board_client(request):
-    posts = Post.objects.order_by("-views")[:7]
+def board_client(request, topic="전체"):
+    if topic == "전체":
+        posts = Post.objects.filter(isDone="Y").order_by("-views")[:7]
+    else:
+        posts = Post.objects.filter(topic=topic, isDone="Y").order_by("-views")[:7]
 
     return render(request, "board_client.html", {"posts": posts})
 
@@ -44,7 +53,7 @@ def post(request, post_id):
         # 삭제 요청
         if "delete-button" in request.POST:
             db_post.delete()
-            return redirect("board_admin")
+            return redirect("board_client")
 
     db_post.views += 1
     db_post.save()
@@ -96,23 +105,64 @@ def post(request, post_id):
 
 
 def write(request):
+    modify = Post.objects.filter(isDone="N")
+
     if request.method == "POST":
         title = request.POST["title"]
         content = request.POST["content"]
         topic = request.POST["topic"]
+        createButton = request.POST.get("save-button")
+        isDone = request.POST.get("isDone")
+        post_id = request.POST.get(content)
+        post = get_object_or_404(Post, pk=post_id)
 
-        Post.objects.create(
-            title=title,
-            content=content,
-            topic=topic,
-            author=request.user,  # 현재 로그인한 사용자를 작성자로 설정
-            views=0,  # 조회수 초기값 설정
-        )
+        if createButton == "글 작성":
+            # 처음 작성
+            if isDone == "Y":
+                Post.objects.create(
+                    title=title, content=content, topic=topic, author=request.user, views=0
+                )
+            # 처음작성이 아닌상태 (임시저장에서 불러온 상태)
+            else:
+                post.isDone = "Y"
+                post.title = title
+                post.content = content
+                post.topic = topic
+                post.save()
+                return redirect("board_admin")
+
+        # 글작성할때
+        # 임시저장이냐 or 글작성이냐
+        # Post.objects.create(
+        #     title=title,
+        #     content=content,
+        #     topic=topic,
+        #     author=request.user,  # 현재 로그인한 사용자를 작성자로 설정
+        #     views=0,  # 조회수 초기값 설정
+        # )
+        # 임시저장된것을 수정할때
+        # 한번더 임시저장 -> update
+        # 처음 임시저장 -> create
+
         # create_at은 현재 시간으로 model에서 설정
 
         # 일단 작성 완료시 board_client로 이동
         return redirect("board_admin")
-    return render(request, "write.html")
+    else:
+        pass
+    return render(request, "write.html", {"modify": modify})
+
+
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == "POST":
+        post.title = request.POST["title"]
+        post.content = request.POST["content"]
+        post.topic = request.POST["topic"]
+        post.create_at = timezone.now()  # 현재 시간으로 업데이트
+        post.save()
+        return redirect("board_client")
+    return render(request, "edit_post.html", {"post": post})
 
 
 # 이미지 업로드
@@ -133,3 +183,27 @@ class image_upload(View):
 
         # 이미지 업로드 완료시 JSON 응답으로 이미지 파일의 url 반환
         return JsonResponse({"location": file_url})
+
+
+openai.api_key = ""
+
+
+# 글 자동완성 기능
+def autocomplete(request):
+    if request.method == "POST":
+        # 제목 필드값 가져옴
+        prompt = request.POST.get("title")
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt},
+                ],
+            )
+            # 반환된 응답에서 텍스트 추출해 변수에 저장
+            message = response["choices"][0]["message"]["content"]
+        except Exception as e:
+            message = str(e)
+        return JsonResponse({"message": message})
+    return render(request, "autocomplete.html")
