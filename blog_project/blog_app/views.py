@@ -1,3 +1,6 @@
+import json
+from django.core.exceptions import ImproperlyConfigured
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm
 from django.contrib.auth import login as auth_login
@@ -105,10 +108,7 @@ def post(request, post_id):
 
 
 def write(request):
-
-
-    modify = Post.objects.filter(isDone='N')
-
+    modify = Post.objects.filter(isDone="N")
 
     if request.method == "POST":
         title = request.POST["title"]
@@ -119,43 +119,29 @@ def write(request):
         tempButton = request.POST.get("modal-save-btn")
         isDone = request.POST.get("isDone")
         post_id = request.POST.get("modify-id")
-        if post_id :
+        if post_id:
             post = get_object_or_404(Post, pk=post_id)
 
-
-
-        if createButton == "글 작성" :
-            if isDone == 'Y' :
-                Post.objects.create(
-                    title=title,
-                    content=content,
-                    topic=topic
-                )
-            else :
+        if createButton == "글 작성":
+            if isDone == "Y":
+                Post.objects.create(title=title, content=content, topic=topic)
+            else:
                 post.title = title
                 post.content = content
                 post.topic = topic
-                post.isDone = 'Y'
+                post.isDone = "Y"
                 post.save()
-        elif createButton == '임시저장' :
-            if isDone == 'Y' :
-                Post.objects.create(
-                    title=title,
-                    content=content,
-                    topic=topic,
-                    isDone='N'
-                )
-            else :
-
+        elif createButton == "임시저장":
+            if isDone == "Y":
+                Post.objects.create(title=title, content=content, topic=topic, isDone="N")
+            else:
                 post.title = title
                 post.content = content
                 post.topic = topic
                 post.save()
-
 
         # 글작성할때
         # 임시저장이냐 or 글작성이냐
-
 
         # 임시저장된것을 수정할때
         # 한번더 임시저장 -> update
@@ -164,12 +150,23 @@ def write(request):
         # create_at은 현재 시간으로 model에서 설정
 
         # 일단 작성 완료시 board_client로 이동
-        return redirect("board_admin")
+        return redirect("board_client")
 
-    else :
+    else:
         pass
     return render(request, "write.html", {"modify": modify})
 
+
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == "POST":
+        post.title = request.POST["title"]
+        post.content = request.POST["content"]
+        post.topic = request.POST["topic"]
+        post.create_at = timezone.now()  # 현재 시간으로 업데이트
+        post.save()
+        return redirect("board_client")
+    return render(request, "edit_post.html", {"post": post})
 
 
 # 이미지 업로드
@@ -192,13 +189,31 @@ class image_upload(View):
         return JsonResponse({"location": file_url})
 
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# secrets.json 파일의 경로를 계산합니다.
+secret_file = os.path.join(BASE_DIR, "..", "secrets.json")
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+
+openai.api_key = get_secret("openai_api_key")
+
+
+# 글 자동완성 기능
 def autocomplete(request):
     if request.method == "POST":
-
-        #제목 필드값 가져옴
-        prompt = request.POST.get('title')
-
+        # 제목 필드값 가져옴
+        prompt = request.POST.get("title")
         try:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
@@ -208,10 +223,8 @@ def autocomplete(request):
                 ],
             )
             # 반환된 응답에서 텍스트 추출해 변수에 저장
-
-            message = response['choices'][0]['message']['content']
+            message = response["choices"][0]["message"]["content"]
         except Exception as e:
             message = str(e)
         return JsonResponse({"message": message})
-    return render(request, 'autocomplete.html')
-
+    return render(request, "autocomplete.html")
