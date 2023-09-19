@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/edit_post.css' %}">
+    <title>edit_{{post.id}}post</title>
+</head>
+<body>
+    {% comment %} 상단 메뉴바 {% endcomment %}
+    <div class="container">
+        <div class="nav-bar">
+            <div class="nav-container">
+                <div>
+                    <a href="{%url 'board_client'%}">
+                        <img src="{% static 'img/black_logo.svg' %}" alt="" />
+                    </a>
+                </div>
+                <div class="nav-topics">
+                    <a href="{% url 'post_list_by_topic' topic='일상' %}">
+                        <button>일상</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='요리' %}">
+                        <button>요리</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='여행' %}">
+                        <button>여행</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='영화' %}">
+                        <button>영화</button></a>
+                    <a href="{% url 'post_list_by_topic' topic='IT' %}">
+                        <button>IT</button></a>
+                    </div>
+                    <div class="row-box">
+                        {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+                    <a
+                        href="{% url 'write' %}"
+                        class="primary-button"
+                        style="color: #1e1e1e">
+                        Just Write!</a>
+                    {% else %}
+                    <a
+                        href="{% url 'login' %}"
+                        class="primary-button"
+                        style="color: #1e1e1e">Login</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="post-container">
+            <div class="big-box">
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="write-box">
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="title"
+                    placeholder="제목"
+                    value="{{ post.title }}"
+                  />
+                  
+      
+                  <textarea
+                    id="content"
+                    name="content"
+                  >{{ post.content}}</textarea>
+      
+                </div>
+                <div class="post-info-box">
+                  <button type="button" id="aiAutocompleteButton" class="ai-button">
+                    <img id="ai-img" src="{% static 'img/ai.svg' %}" alt="AI 아이콘" />
+                    <div id="loading-animation" style="display: none;">
+                      <img src="{% static 'img/loading.gif' %}" alt="로딩 중" />
+                    </div> 
+                    AI 글 자동완성
+                  </button>
+                             
+                  <div class="box">
+                    <h2>TOPIC</h2>
+                    <div>
+                      <input type="radio" id="all" name="topic" value="전체" {% if post.topic == '전체' %}checked{% endif %} />
+                      <label for="all">전체</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="daily" name="topic" value="일상" {% if post.topic == '일상' %}checked{% endif %}/>
+                        <label for="daily">일상</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="cooking" name="topic" value="요리" {% if post.topic == '요리' %}checked{% endif %}//>
+                      <label for="cooking">요리</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="travel" name="topic" value="여행" {% if post.topic == '여행' %}checked{% endif %}//>
+                      <label for="travel">여행</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="movie" name="topic" value="영화" {% if post.topic == '영화' %}checked{% endif %}//>
+                      <label for="movie">영화</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="it" name="topic" value="IT" {% if topic == 'IT' %}checked{% endif %}//>
+                      <label for="it">IT / 전자기기</label>
+                    </div>
+                  </div>
+                  <div class="box" width="150px">
+                    <div class="info">
+                      <h2>UPLOAD INFO</h2>
+                      <p>공개여부: {% if edit_mode %}전체공개{% else %}미공개{% endif %}</p>
+                      <input type="file" name="file" id="imageUpload" style="display:none;">
+                      <button type="button" class="button-line" onclick="document.getElementById('imageUpload').click();">이미지 업로드</button>
+                    </div>
+                    <div class="save-box">
+                      {% if edit_mode %}
+                        <input
+                          type="submit"
+                          name="delete-button" 
+                          class="delete-button"
+                          value="삭제"
+                        />
+                        <input
+                          type="submit"
+                          class="save-button"
+                          value="수정"
+                        />
+                        
+                      {% else %}
+                      {% comment %} <input type="btn" name="save-button" class="save-button" value="취소" /> {% endcomment %}
+                      <input type="submit" name="save-button" class="save-button" value="수정완료" />
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+          </form>
+        </div>
+
+      </div>
+  
+  
+    </div>
+
+<div class="footer">
+    <div class="footer-container">
+        <p>Made with</p><span>Django</span>
+    </div>
+</div>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // html 문서가 완전히 파싱 된 후 이벤트 발생
+    
+        // 이미지 업로드 후 에디터 내에 이미지 삽입
+        document.getElementById('imageUpload').addEventListener('change', function() {
+          let formData = new FormData();
+          formData.append('file', this.files[0]);
+    
+          fetch('{% url "image_upload" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}'
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            tinyMCE.activeEditor.insertContent(`<img src="${data.location}"/>`);
+          })
+          .catch(error => console.error('Error:', error));
+        });
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const topicRadios = document.querySelectorAll('input[name="topic"]');
+            let isTopicSelected = false;
+      
+            topicRadios.forEach(radio => {
+              if (radio.checked) {
+                isTopicSelected = true;
+              }
+            });
+      
+            if (!isTopicSelected) {
+              alert('TOPIC을 선택하세요.'); // 알람 표시
+              event.preventDefault(); // 폼 제출 막기
+            }
+          });
+
+          document.getElementById('aiAutocompleteButton').addEventListener('click', function() {
+            // 로딩 애니메이션 
+            document.getElementById('loading-animation').style.display = 'block';
+            document.getElementById('ai-img').style.display = 'none';
+  
+            let title = document.getElementById('title').value;
+            fetch('{% url "autocomplete" %}', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}',
+              },
+              body: new URLSearchParams({
+                'title': title
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              document.getElementById('loading-animation').style.display = 'none';
+              document.getElementById('ai-img').style.display = 'block';
+          
+              //기존 내용에 자동완성 된 내용 더함
+              let currentContent = tinyMCE.activeEditor.getContent();
+            data.message = data.message.replace(/\n/g, '<br>');
+            tinyMCE.activeEditor.setContent(currentContent + data.message);
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              document.getElementById('loading-animation').style.display = 'none';
+            });
+          });
+
+    });
+</script>
+<script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+<script src="{% static 'js/write_scripts.js' %}"></script>
+</html>
