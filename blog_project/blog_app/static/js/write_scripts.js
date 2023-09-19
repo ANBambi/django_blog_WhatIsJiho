@@ -21,12 +21,23 @@ tinymce.init({
 
 const modalOpenBtn = document.getElementById('modal-open-btn')
 const modalCloseBtn = document.getElementById('modal-close-btn')
-const modalWrapper = document.querySelector(".modal-wrapper")
+const modalWrapper = document.getElementsByClassName("modal-wrapper")[0]
 
 modalOpenBtn.addEventListener("click", ()=>{
-    modalWrapper.computedStyleMap.display = "flex";
+    modalWrapper.style.display = "flex";
 })
 
 modalCloseBtn.addEventListener("click", ()=>{
-    modalWrapper.style.display - "none";
+    modalWrapper.style.display = "none";
 })
+
+
+
+const writeTitle = document.getElementById('title')
+const writeContent = document.getElementById('content')
+const modifyButton = document.getElementsByClassName('modify_button')[0]
+
+function modifyClikc() {
+    
+}
+
