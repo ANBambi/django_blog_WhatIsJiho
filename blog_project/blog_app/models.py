@@ -11,6 +11,7 @@ class Post(models.Model):
     views = models.IntegerField(default=0)  # visitcount
     topic = models.CharField(max_length=100)  # 주제 필드
     author = models.CharField(max_length=100, null=True, blank=True)  # 작성자 필드
+    isDone = models.CharField(max_length=1, default='Y')
 
     def __str__(self):
         return self.title
