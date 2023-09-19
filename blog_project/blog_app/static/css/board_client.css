@@ -127,7 +127,7 @@ body{
 .first-post-box p{
     font-weight: 300;
     margin-bottom: 10px;
-    display: block;
+    /* display: block; */
 
 }
 
@@ -149,9 +149,9 @@ body{
     color: #fff;
     z-index: 1;
     height: auto;
-    width: 24%;
+    width: 32%;
     line-height: 2;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .first-post-box .container .post-info-box p{
