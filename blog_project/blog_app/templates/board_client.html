@@ -15,21 +15,21 @@
     <div class="nav-bar">
         <div class="nav-container">
             <div>
-                <a href="#">
+                <a href="{% url 'board_client' %}">
                     <img src="{% static 'img/white_logo.svg' %}" alt="" />
                 </a>
             </div>
             <div class="nav-buttons">
                 <div class="nav-topics">
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='일상' %}">
                         <button>일상</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='요리' %}">
                         <button>요리</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='여행' %}">
                         <button>여행</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='영화' %}">
                         <button>영화</button></a>
-                    <a href="#">
+                    <a href="{% url 'post_list_by_topic' topic='IT' %}">
                         <button>IT</button></a>
                 </div>
                 <div class="row-box">
@@ -80,16 +80,17 @@
             {% for post in posts %} {% if not forloop.first %}
             <div class="card">
               <div class="card-thumbnail-img">
-                {% if post.content|get_img_src %}
-                <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" />
-                {% else %}
-                <div style="width: 100%; height: 100%; background-color: transparent"></div>
-                {% endif %}
+                <a href="{% url 'post' post.id %}" class="post-info-box-link">
+                    {% if post.content|get_img_src %}
+                    <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" />
+                    {% else %}
+                    <div style="width: 100%; height: 100%; background-color: transparent"></div>
+                    {% endif %}
+                </a>
               </div>
               <a href="{% url 'post' post.id %}" class="post-info-box-link">
                 <div class="card-info-box">
-                  <p>{{ post.created_at }}</p>
-  
+                  <p>{{ post.create_at }}</p>
                   <h3>{{ post.title }}</h3>
                   <p>{{ post.content|text_only }}</p>
                 </div>
