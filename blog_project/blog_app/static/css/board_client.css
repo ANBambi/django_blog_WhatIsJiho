@@ -119,7 +119,7 @@ body{
 }
 
 .first-post-box h3{
-    font-size: 48px;
+    font-size: 45px;
     font-weight: 700;
     margin: 0;
 }
@@ -151,6 +151,15 @@ body{
     height: auto;
     width: 24%;
     line-height: 2;
+    padding: 10px;
+}
+
+.first-post-box .container .post-info-box p{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+
 }
 
 .first-post-box button{
