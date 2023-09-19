@@ -65,7 +65,11 @@
                     placeholder="제목"
                     value="{{ post.title }}"
                   />
-                  
+
+                  <div class="select-isDone">
+                    <input type="radio" name="isDone" value="option1" checked> Y
+                    <input type="radio" name="isDone" value="option2"> N
+                  </div>
       
                   <textarea
                     id="content"
@@ -131,15 +135,18 @@
                         />
                         
                       {% else %}
-                      <input type="submit" name="temp-save-button" class="modal-open-btn"
+                      <input type="submit" name="temp-save-button" class="temp-save-button"
                       id="add_feed"
                       value="임시저장" />
                       <input type="submit" name="save-button" class="save-button" value="글 작성" />
                       {% endif %}
                     </div>
                   </div>
+
                 </div>
           </form>
+
+          <button id="modal-open-btn">임시저장</button>
         </div>
 
       </div>
@@ -147,15 +154,21 @@
   
     </div>
 
+    
+
     <div class="modal-wrapper">
       <div class="modal-body">
         <div class="modal-head">
-          <h3>제발.. 떠라</h3>
-          <button id='modal-select-btn'>선택버튼</button>
-          <button id='modal-close-btn'>닫기버튼</button>
-          
+          <h1>임시저장목록</h1>
+          <ul>
+            <p>title</p>
+            {% for modi in modify %}
+            <button id='{{modi.id}}' class='modify-button' name = "{{modi.content}}"><p>{{modi.title}} / {{modi.create_at}}</p></button>
+            {% endfor %}
+          </ul>
+          <button id='modal-select-btn'>임시저장</button>
+          <button id='modal-close-btn'>취소</button>
         </div>
-
       </div>
     </div>
 
@@ -167,28 +180,92 @@
 
 </body>
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // html 문서가 완전히 파싱 된 후 이벤트 발생
-    
-        // 이미지 업로드 후 에디터 내에 이미지 삽입
-        document.getElementById('imageUpload').addEventListener('change', function() {
-          let formData = new FormData();
-          formData.append('file', this.files[0]);
-    
-          fetch('{% url "image_upload" %}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'X-CSRFToken': '{{ csrf_token }}'
-            }
-          })
-          .then(response => response.json())
-          .then(data => {
-            tinyMCE.activeEditor.insertContent(`<img src="${data.location}"/>`);
-          })
-          .catch(error => console.error('Error:', error));
-        });
+  document.addEventListener('DOMContentLoaded', (event) => {
+    // html 문서가 완전히 파싱 된 후 이벤트 발생
+
+    // 이미지 업로드 후 에디터 내에 이미지 삽입
+    document.getElementById('imageUpload').addEventListener('change', function() {
+      let formData = new FormData();
+      formData.append('file', this.files[0]);
+
+      fetch('{% url "image_upload" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        tinyMCE.activeEditor.insertContent(`<img src="${data.location}"/>`);
+      })
+      .catch(error => console.error('Error:', error));
     });
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+      const topicRadios = document.querySelectorAll('input[name="topic"]');
+      let isTopicSelected = false;
+
+      topicRadios.forEach(radio => {
+        if (radio.checked) {
+          isTopicSelected = true;
+        }
+      });
+
+      if (!isTopicSelected) {
+        alert('TOPIC을 선택하세요.'); // 알람 표시
+        event.preventDefault(); // 폼 제출 막기
+      }
+    });
+
+
+    {% comment %} ai 자리 {% endcomment %}
+});
+
+
+var buttons = document.getElementsByClassName('modify-button');
+
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function() {
+        var buttonId = this.id; // 클릭된 버튼의 id 가져오기
+
+        // AJAX 요청 보내기
+        fetch('/your-api-endpoint/' + buttonId + '/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                var title = data.title;
+                var content = data.content;
+                
+                // title과 content를 tinyMCE 에디터에 추가
+                tinyMCE.activeEditor.setContent('<h2>' + title + '</h2>' + content);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+}
+
+var buttons = document.getElementsByClassName('modify-button');
+
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', function() {
+        // 클릭된 버튼에서 title과 content 정보 가져오기
+        var titleInput = document.getElementById('title');
+        titleIn = this.innerText.split(' / ')[0];
+        var content = this.getAttribute('name');
+
+        // title과 content를 tinyMCE 에디터에 추가
+        tinyMCE.activeEditor.setContent(content);
+        titleInput.value = titleIn;
+        modalWrapper.style.display = "none";
+      });
+    }
+    
 </script>
 <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
 <script src="{% static 'js/write_scripts.js' %}"></script>
