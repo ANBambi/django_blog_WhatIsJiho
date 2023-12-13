@@ -98,10 +98,36 @@
 
 
 ## 프로젝트 프레젠테이션
-프로젝트 발표안은 [ppt 첨부[JHC_PPT.pptx](https://github.com/chorongfire33/django_blog_WhatIsJiho/files/13657117/JHC_PPT.pptx)
-]를 참고하세요.
+프로젝트 발표안은 <b><i>[JHC.pptx](https://github.com/chorongfire33/django_blog_WhatIsJiho/files/13657117/JHC_PPT.pptx)</i></b>
+를 참고하세요.
+
+
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/d6a0a79c-2390-408b-a1f7-e8b14c5465de" alt="JHC_PPT_0001" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/a3f7aa85-19a4-4997-9d11-6a60060eb6a2" alt="JHC_PPT_0002" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/54549358-27a2-4b6e-a2b2-c898af41ad14" alt="JHC_PPT_0003" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/3f35092f-c67c-49d2-a231-c9dc47086453" alt="JHC_PPT_0004" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/b63fb0bd-a8f8-403b-847a-9f2138e6ae13" alt="0005" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/de835e0d-da80-4bfe-89e5-7eb4d6ee6b13" alt="0006" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/0791f867-3e6d-4bba-925b-86092288cb97" alt="0007" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/f53d2e21-1091-4afe-a5e3-423580282a57" alt="0008" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/76e42c08-cb09-492d-a089-3df6fb41cd67" alt="0009" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/a031c3a5-715e-4c85-8ffd-2bb38e35c0db" alt="0010" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/8cf3359c-c4fe-4950-b164-29ad682b4bf8" alt="0011" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/ad650cf6-1e07-42f3-a371-7c7cc47ffe4e" alt="0012" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/9e76eb3d-06b8-4b9c-9ddc-afd59783388b" alt="0013" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/b5946eff-675e-47a9-ab03-b16b7efd07dd" alt="0014" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/5199f509-f6df-486d-8d77-6d9b7ac94a2e" alt="0015" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/6ccfdaa3-b5e7-430d-99f1-07a377029e92" alt="0016" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/1f9d143e-131d-4ce4-b9e0-a0463614e37e" alt="0017" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/fd296894-423f-48ba-9d5f-bdd91ff4cfd0" alt="0018" width="192" height="108">
+<img src="https://github.com/chorongfire33/django_blog_WhatIsJiho/assets/137133526/66420295-5d88-4520-9dcf-0787845d7964" alt="0019" width="192" height="108">
+
+
 
 
 ## 연락처
 
 ` 프로젝트에 대한 질문, 버그 제보, 또는 기여를 하고 싶다면 GitHub 이슈 트래커를 이용해주세요. `
+
+<i> Written by chorongfire33 (Min-young) </i>
+
