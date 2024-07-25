@@ -129,5 +129,5 @@
 
 ` 프로젝트에 대한 질문, 버그 제보, 또는 기여를 하고 싶다면 GitHub 이슈 트래커를 이용해주세요. `
 
-<i> Written by chorongfire33 (Min-young) </i>
+<i> Written by ANBambi (Min-young) </i>
 
