@@ -57,7 +57,7 @@
       </a>
     </td>
     <td align="center" width="150px">
-      <a href="https://github.com/ANBambi" target="_blank">
+      <a href="https://github.com/minyoung0303" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/137133526?v=4" alt="이민영 프로필" />
       </a>
     </td>
@@ -79,7 +79,7 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/ANBambi" target="_blank">
+      <a href="https://github.com/minyoung0303" target="_blank">
         이민영
       </a>
     </td>
@@ -129,5 +129,5 @@
 
 ` 프로젝트에 대한 질문, 버그 제보, 또는 기여를 하고 싶다면 GitHub 이슈 트래커를 이용해주세요. `
 
-<i> Written by ANBambi (Min-young) </i>
+<i> Written by minyoung0303 (Min-young) </i>
 
